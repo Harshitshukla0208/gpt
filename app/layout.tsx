@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import {SessionProvider} from "../components/SessionProvider"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import Login from "@/components/Login";
 
 export const metadata = {
   title: 'Next.js',
@@ -21,16 +22,20 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <SessionProvider session={session}>
-          <div className="flex">
+          {!session ? (
+            <Login />
+          ) : (
+            <div className="flex">
 
-            <div className="bg-gray-700/50 max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
-              <Sidebar />
-            </div>
+              <div className="bg-gray-700/50 max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
+                <Sidebar />
+              </div>
 
-            <div className="flex-1">
-              {children}
+              <div className="flex-1">
+                {children}
+              </div>
             </div>
-          </div>
+          )}
         </SessionProvider>
       </body>
     </html>
