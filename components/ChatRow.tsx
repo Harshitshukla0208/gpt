@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { db } from '@/firebase';
-import { collection } from 'firebase/firestore';
+import { collection, deleteDoc, doc } from 'firebase/firestore';
 
 type Props = {
     id: string;
@@ -27,13 +27,18 @@ const ChatRow = ({ id }: Props) => {
         userEmail ? collection(db, 'users', userEmail, 'chats', id, 'messages') : null
     );
 
+    const removeChat = async() => {
+        await deleteDoc(doc(db, "users", session?.user?.email!, "chats", id));
+        router.replace("/")
+    }
+
     return (
         <Link href={`/chat/${id}`} className={`chatRow ${active ? 'bg-gray-700/50' : ''} justify-center`}>
             <ChatBubbleLeftIcon className='h-5 w-5' />
             <p className='flex-1 hidden md:inline-flex truncate'>
                 {messages?.docs[messages.docs.length - 1]?.data().text || 'New Chat'}
             </p>
-            <TrashIcon className='h-5 w-5 text-gray-700 hover:text-red-700' />
+            <TrashIcon onClick={removeChat} className='h-5 w-5 text-gray-700 hover:text-red-700' />
         </Link>
     );
 };
