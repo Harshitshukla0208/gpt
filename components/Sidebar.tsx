@@ -2,7 +2,7 @@
 import React from 'react'
 import NewChat from './NewChat'
 import { useSession, signOut } from 'next-auth/react'
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftEndOnRectangleIcon} from '@heroicons/react/24/solid'
 
 const Sidebar = () => {
 
@@ -31,7 +31,7 @@ const Sidebar = () => {
                         onClick={() => signOut()} 
                         className='flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg mx-auto mb-4 hover:bg-gray-700'
                     >
-                        <ArrowLeftOnRectangleIcon className='h-5 w-5 mr-2' />
+                        <ArrowLeftEndOnRectangleIcon className='h-5 w-5 mr-2' />
                         Sign Out
                     </button>
                 </>
